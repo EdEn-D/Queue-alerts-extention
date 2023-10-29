@@ -167,9 +167,10 @@ function handleSound(soundOn, lastPlayedTime){
 function main() {
     let lastPlayedTime = 0;  // Default value
     let currentExceedingCalls = []; // To store rows from the last check
+    let currColor = DEFAULT_BG_COLOR;
 
     // Fetch user settings from storage
-    chrome.storage.sync.get(['minutesToTrigger', 'isEnabled', 'colorOn','soundOn', 'lastPlayedTime', 'notificationOn', 'currentExceedingCalls'], function(items) {
+    chrome.storage.sync.get(['minutesToTrigger', 'isEnabled', 'flashOn','soundOn', 'lastPlayedTime', 'notificationOn', 'currentExceedingCalls'], function(items) {
         lastPlayedTime = items.lastPlayedTime || 0;
         let currentExceedingCalls = items.currentExceedingCalls || [];
 
@@ -198,7 +199,7 @@ function main() {
             console.log("---")
             // if there are new callers exeeding the time, play sound and notify telegram
             if (newExeedingCalls.length > 0){
-                console.log("new cunt is calling")
+                console.log("new client is calling")
                 handleSound(items.soundOn, lastPlayedTime); // change to play every time a new caller exeeds
                 if (items.notificationOn) {
                     //sendMessageToTelegramGroup('Hello from my Telegram bot!');
@@ -207,18 +208,38 @@ function main() {
             }
 
             // The bg will be red whenever there is at least one caller that is exeeding the time
-            if (deviationTrigger && items.colorOn) {
-                document.body.style.backgroundColor = TRIGGER_BG_COLOR;
+            if (deviationTrigger) {
+                if (items.flashOn){
+                    flashScreen(currColor)
+                }
+                else
+                {
+                    document.body.style.backgroundColor = TRIGGER_BG_COLOR;
+                    currColor = TRIGGER_BG_COLOR;
+                }
             } else {
                 document.body.style.backgroundColor = DEFAULT_BG_COLOR;
+                currColor = DEFAULT_BG_COLOR;
             }
             
         } else {
             document.body.style.backgroundColor = DEFAULT_BG_COLOR;
+            currColor = DEFAULT_BG_COLOR;
         }
 
     });
 }
 
+function flashScreen(currColor){
+    if (currColor == DEFAULT_BG_COLOR){
+        document.body.style.backgroundColor = TRIGGER_BG_COLOR;
+        currColor = TRIGGER_BG_COLOR;
+    }
+    else{
+        document.body.style.backgroundColor = DEFAULT_BG_COLOR;
+        currColor = DEFAULT_BG_COLOR;
+    }
+}
+
 // Setting an interval to run the main function every second
-setInterval(main, 2000);
+setInterval(main, 1000);
