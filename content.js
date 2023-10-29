@@ -1,5 +1,5 @@
 // const ALERT_SOUND_PATH = 'notification.mp3'; 
-const ALERT_SOUND_PATH = chrome.extension.getURL('notification.m4a');
+const ALERT_SOUND_PATH = chrome.runtime.getURL('notification.mp3');
 const DEFAULT_BG_COLOR = 'lightblue';
 const TRIGGER_BG_COLOR = 'red';
 const ALERT_INTERVAL = 5000;
@@ -162,6 +162,15 @@ function handleSound(soundOn, lastPlayedTime){
     }
 }
 
+// Check what bg color the screen is and flash screen
+function flashScreen(){
+    if (document.body.style.backgroundColor == DEFAULT_BG_COLOR){
+        document.body.style.backgroundColor = TRIGGER_BG_COLOR;
+    }
+    else{
+        document.body.style.backgroundColor = DEFAULT_BG_COLOR;
+    }
+}
 
 // The main function which orchestrates everything
 function main() {
@@ -210,7 +219,7 @@ function main() {
             // The bg will be red whenever there is at least one caller that is exeeding the time
             if (deviationTrigger) {
                 if (items.flashOn){
-                    flashScreen(currColor)
+                    flashScreen()
                 }
                 else
                 {
@@ -230,16 +239,7 @@ function main() {
     });
 }
 
-function flashScreen(currColor){
-    if (currColor == DEFAULT_BG_COLOR){
-        document.body.style.backgroundColor = TRIGGER_BG_COLOR;
-        currColor = TRIGGER_BG_COLOR;
-    }
-    else{
-        document.body.style.backgroundColor = DEFAULT_BG_COLOR;
-        currColor = DEFAULT_BG_COLOR;
-    }
-}
+
 
 // Setting an interval to run the main function every second
 setInterval(main, 1000);
