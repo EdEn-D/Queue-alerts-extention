@@ -169,7 +169,7 @@ function main() {
     let currentExceedingCalls = []; // To store rows from the last check
 
     // Fetch user settings from storage
-    chrome.storage.sync.get(['minutesToTrigger', 'isEnabled', 'soundOn', 'lastPlayedTime', 'notificationOn', 'currentExceedingCalls'], function(items) {
+    chrome.storage.sync.get(['minutesToTrigger', 'isEnabled', 'colorOn','soundOn', 'lastPlayedTime', 'notificationOn', 'currentExceedingCalls'], function(items) {
         lastPlayedTime = items.lastPlayedTime || 0;
         let currentExceedingCalls = items.currentExceedingCalls || [];
 
@@ -207,7 +207,7 @@ function main() {
             }
 
             // The bg will be red whenever there is at least one caller that is exeeding the time
-            if (deviationTrigger) {
+            if (deviationTrigger && items.colorOn) {
                 document.body.style.backgroundColor = TRIGGER_BG_COLOR;
             } else {
                 document.body.style.backgroundColor = DEFAULT_BG_COLOR;
