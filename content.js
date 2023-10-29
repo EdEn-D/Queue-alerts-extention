@@ -5,7 +5,7 @@ const TRIGGER_BG_COLOR = 'red';
 const ALERT_INTERVAL = 5000;
 
 const TELEGRAM_TOKEN = '6406293699:AAHfs7oIonXCN7WX5ni85FctPlYa0ClGTsA';
-const TELEGRAM_CHAT_ID = '-4074702258';
+const TELEGRAM_CHAT_ID = '-1001998994957';
 
 function sendMessageToTelegramGroup(message) {
     const apiUrl = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
