@@ -115,7 +115,7 @@ function getExeedingCallerList(tableData, minutesToTrigger) {
             resultRows.push(row); // Push the entire row to the result
         }
     });
-    //chrome.storage.sync.set({'currentExceedingCalls': resultRows}); // this shouldn't be done here becasue i want to later compare this iteration with the previous iteration
+    //chrome.storage.local.set({'currentExceedingCalls': resultRows}); // this shouldn't be done here becasue i want to later compare this iteration with the previous iteration
     return resultRows;
 }
 
@@ -137,7 +137,7 @@ function getNewExceedingCalls(currentExceedingCalls, newExeedingCalls) {
 
     // if (newCalls.length > 0) {
     //     // Update the storage if new calls are found
-    //     chrome.storage.sync.set({'currentExceedingCalls': newExeedingCalls});
+    //     chrome.storage.local.set({'currentExceedingCalls': newExeedingCalls});
     // }
 
     return newCalls; // Returns an array of new rows
@@ -159,7 +159,7 @@ function handleSound(soundOn, lastPlayedTime){
         audio.play();
 
         lastPlayedTime = now;
-        chrome.storage.sync.set({ lastPlayedTime: now });
+        chrome.storage.local.set({ lastPlayedTime: now });
     }
 }
 
@@ -180,7 +180,7 @@ function main() {
     let currColor = DEFAULT_BG_COLOR;
 
     // Fetch user settings from storage
-    chrome.storage.sync.get(['minutesToTrigger', 'isEnabled', 'flashOn','soundOn', 'lastPlayedTime', 'notificationOn', 'currentExceedingCalls'], function(items) {
+    chrome.storage.local.get(['minutesToTrigger', 'isEnabled', 'flashOn','soundOn', 'lastPlayedTime', 'notificationOn', 'currentExceedingCalls'], function(items) {
         lastPlayedTime = items.lastPlayedTime || 0;
         let currentExceedingCalls = items.currentExceedingCalls || [];
 
@@ -205,7 +205,7 @@ function main() {
             console.log('newExeedingCalls : ');
             console.log(newExeedingCalls);
 
-            chrome.storage.sync.set({'currentExceedingCalls': exeedingCalls});
+            chrome.storage.local.set({'currentExceedingCalls': exeedingCalls});
             console.log("---")
             // if there are new callers exeeding the time, play sound and notify telegram
             if (newExeedingCalls.length > 0){
