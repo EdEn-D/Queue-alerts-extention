@@ -3,7 +3,7 @@
   "name": "Queue Alerts",
   "version": "1.0",
   "description": "Alert agents when queue wait times are too long.",
-  "permissions": ["storage", "notifications"],
+  "permissions": ["storage", "notifications", "unlimitedStorage"],
   "action": {
       "default_popup": "popup.html"
   },
