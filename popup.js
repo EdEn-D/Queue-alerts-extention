@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Load saved settings when the popup opens
-    chrome.storage.sync.get(['minutesToTrigger', 'isEnabled', 'flashOn', 'soundOn', 'notificationOn'], function(items) {
+    chrome.storage.local.get(['minutesToTrigger', 'isEnabled', 'flashOn', 'soundOn', 'notificationOn'], function(items) {
 
         document.getElementById('minutesInput').value = items.minutesToTrigger || 10;
         document.getElementById('enableCheckbox').checked = items.isEnabled || false;
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const soundOn = document.getElementById('enableSound').checked;
         const notificationOn = document.getElementById('enableNotification').checked;  
 
-        chrome.storage.sync.set({
+        chrome.storage.local.set({
             'minutesToTrigger': minutes,
             'isEnabled': isEnabled,
             'flashOn' : flashOn,

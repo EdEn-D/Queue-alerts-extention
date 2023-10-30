@@ -1,5 +1,5 @@
 // const ALERT_SOUND_PATH = 'notification.mp3'; 
-const ALERT_SOUND_PATH = chrome.runtime.getURL('notification.mp3');
+const ALERT_SOUND_PATH = chrome.runtime.getURL('notification.m4a');
 const DEFAULT_BG_COLOR = 'lightblue';
 const TRIGGER_BG_COLOR = 'red';
 const ALERT_INTERVAL = 5000;
@@ -179,8 +179,10 @@ function main() {
     let currentExceedingCalls = []; // To store rows from the last check
     let currColor = DEFAULT_BG_COLOR;
 
+    // console.log("in main")
     // Fetch user settings from storage
     chrome.storage.local.get(['minutesToTrigger', 'isEnabled', 'flashOn','soundOn', 'lastPlayedTime', 'notificationOn', 'currentExceedingCalls'], function(items) {
+        // console.log("in local")
         lastPlayedTime = items.lastPlayedTime || 0;
         let currentExceedingCalls = items.currentExceedingCalls || [];
 
