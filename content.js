@@ -6,12 +6,13 @@ const ALERT_INTERVAL = 5000;
 
 const TELEGRAM_TOKEN = '6406293699:AAHfs7oIonXCN7WX5ni85FctPlYa0ClGTsA';
 const TELEGRAM_CHAT_ID = '-1001998994957';
+const TELEGRAM_CHAT_ID_TEST = '-1002107398827';
 
 function sendMessageToTelegramGroup(message) {
     const apiUrl = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
 
     const payload = {
-        chat_id: TELEGRAM_CHAT_ID,
+        chat_id: TELEGRAM_CHAT_ID_TEST,
         text: message
     };
 
